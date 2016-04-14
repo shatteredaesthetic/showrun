@@ -10,3 +10,4 @@ Current commands:
 Future commands:
 > * qclean
 > * qarchive
+> * endofshow -> add support for multi-show days
