@@ -1,0 +1,31 @@
+{
+  "name": "showrun",
+  "version": "1.0.0",
+  "description": "Production Environment for QLab systems",
+  "main": "./dist/runshow.js",
+  "scripts": {
+    "build": "babel src -d dist -s",
+    "prebuild": "rm -rf dist",
+    "watch": "babel src -d dist -sw",
+    "prewatch": "rm -rf dist",
+    "test": "babel-tape-runner test/*.js | faucet"
+  },
+  "bin": {
+    "showrun": "./dist/runshow.js"
+  },
+  "author": "Jason Polhemus",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^1.11.0",
+    "nodemailer-smtp-transport": "^2.0.0",
+    "ramda": "^0.19.1",
+    "shelljs": "^0.5.3",
+    "vorpal": "^1.5.5"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015-node": "^5.0.2",
+    "babel-preset-stage-0": "^6.3.13",
+    "tape": "^4.4.0"
+  }
+}
