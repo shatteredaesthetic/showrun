@@ -1,3 +1,7 @@
+# !Note! this is a work-in-progress, and shouldn't be used yet.
+
+new strtucture starts with index.js, with modules in /cmds
+
 # qmanage
 
 > the QLab Manager
