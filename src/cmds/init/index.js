@@ -19,9 +19,9 @@ function makeCfgLabels(ans) {
 function makeCfg(ans) {
   return `name: ${ans.projName}\n`
     .concat(`sm:\n`)
-    .concat(`    name: ${ans.smName}`)
-    .concat(`    email: ${ans.smEmail}`)
-    .concat(`sender: ${ans.sender}`)
+    .concat(`    name: ${ans.smName}\n`)
+    .concat(`    email: ${ans.smEmail}\n`)
+    .concat(`sender: ${ans.sender}\n`)
     .concat(makeCfgLabels(ans))
 }
 
@@ -41,8 +41,8 @@ function createFolderStructure(ans) {
   const sess = `sessions sessions/previousSessions sessions/previousSessions/<1.0.0 sessions/previousSessions/tech`
   const snd = `${ans.pre ? 'pre/' : ''}${ans.inter ? 'int/' : ''}${ans.post ? 'post' : ''}`
   const as = assets.split(' ').includes('assets/audio') ?
-    as.concat(` ${snd ? `assets/audio/${snd}` : ''} assets/audio/show assets/_scripts`) :
-    assets.concat('_scripts')
+    as.concat(` ${snd ? `assets/audio/${snd}` : ''} assets/audio/show assets/.scripts`) :
+    assets.concat('.scripts')
 
   exec(`mkdir documentation ${sess} assets ${as}`, (e,o,se) => ())
 }

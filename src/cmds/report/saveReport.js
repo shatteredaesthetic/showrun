@@ -5,8 +5,7 @@ import { reportMaterials, formatDate, shift } from './utils'
 const labelLength = R.compose(
   R.head,
   R.sort((a, b) => b - a),
-  R.map(x => x.length),
-  R.map(R.head)
+  R.map(R.compose(x => x.length, R.head))
 )
 
 const makeTable = (list, lbl, n) =>

@@ -11,10 +11,10 @@ function storageObj(cli) {
 
 export function reportMaterials(cli) {
   const { labels, ms, times } = storageObj(cli)
-  const arr = (a, b) => [ a, b ]
+  const tup = (a, b) => [ a, b ]
   return [
-    R.zipWith(arr, labels, times),
-    R.zipWith(arr, labels, ms)
+    R.zipWith(tup, labels, times),
+    R.zipWith(tup, labels, ms)
   ]
 }
 

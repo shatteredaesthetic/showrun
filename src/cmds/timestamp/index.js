@@ -7,6 +7,11 @@ import chalk from 'chalk'
   labels: [] -- loaded from the config
 */
 
+const push = (val, arr) => {
+  arr.push(val)
+  return arr
+}
+
 function newTimeIO() {
   let t = new Date();
   return [ t.toLocaleTimeString('en-US', {hour12: false}), t.getTime() ];
@@ -20,13 +25,14 @@ function newLabelTimestamp(times, label, cli) {
 }
 
 function nextTimestamp([ time, ms ], cli) {
-  cli.localStorage['times'].push(time)
-  cli.localStorage['ms'].push(ms)
+  const store = cli.localStorage
+  store.setItem('times', push(time, store['times']))
+  store.setItem('ms', push(ms, store['ms']))
 }
 
-function setTimestamp(options, cli) {
+function setTimestamp(cli, lbl = false) {
   const ts = newTimeIO()
-  return options.label ? newLabelTimestamp(ts, options.label, cli) : nextTimestamp(ts, cli)
+  return lbl ? newLabelTimestamp(ts, lbl, cli) : nextTimestamp(ts, cli)
 }
 
 function initLocal(cli, labels) {
@@ -40,12 +46,10 @@ export default timestamp(labels, path) {
   return function(cli) {
     initLocal(cli, labels)
     return cli
-      .command('timestamp', 'logs a timestamp')
-      .option('-l, --label <lbl>', `logs a timestamp with provided ${chalk.blue('lbl')} not in config`)
-      .types({ string: ['l', 'label'] })
-      .action(function({ options }, cb){
+      .command('timestamp [lbl]', `logs a timestamp with label from config, if ${chalk.blue('lbl')} isn't provided`)
+      .action(function({ lbl }, cb){
         const self = this
-        setTimestamp(options, self)
+        lbl ? setTimestamp(self, lbl) : setTimestamp(self)
         cb()
       })
   }

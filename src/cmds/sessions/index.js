@@ -16,7 +16,7 @@ function orgSessions(path) {
   return R.compose(
     R.sort((a,b) => getMillis(b) - getMillis(a)),
     R.filter(x => lstatSync(x).isFile() && !x.includes('.DS_Store') && !x.includes('changelog')),
-    R.map(file => join(`${path}`, 'Sessions', file))
+    R.map(file => join(path, 'Sessions', file))
   )
 }
 

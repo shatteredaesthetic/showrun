@@ -1,6 +1,15 @@
 import { reportMaterials, formatDate, shift } from './utils'
 import { exec } from 'child_process'
 
+const wrapItem = el => x => `<${el}>${x}</${el}>`
+const wrapTH = wrapItem('th')
+const wrapTR = wrapItem('tr')
+const wrapTD = wrapItem('td')
+const wrapTBL = wrapItem('table')
+const wrapHTML = wrapItem('html')
+const wrapBDY = wrapItem('body')
+const wrapP = wrapItem('p')
+
 export default function sendReport(cfg, cli, addr = false) {
   const body = makeEmailBody(reportMaterials(cli), cfg, addr)
   sendEmail(makeEmailMeta(cfg).concat(body))
@@ -25,11 +34,13 @@ function makeEmailMeta(cfg, addr = false) {
   ].join('\n')
 }
 
-function makeEmailBody([ t, d ], cfg, addr) {
+function makeEmailBody([ times, durations ], cfg, addr) {
   return wrapHTML(
     wrapBDY(
       wrapP(`${!addr ? `Hey ${cfg.sm.name}, ` : ''}Here are the times and durations:`)
-        .concat(makeHtmlTable(t, 'Time')).concat('<hr/>').concat(makeHtmlTable(d, 'Duration'))
+        .concat(makeHtmlTable(times, 'Time'))
+        .concat('<hr/>')
+        .concat(makeHtmlTable(durations, 'Duration'))
     )
   )
 }
@@ -40,12 +51,3 @@ function makeHtmlTable(list, lbl) {
       .concat(list.map(([a, b]) => wrapTR(`${wrapTD(a)}${wrapTD(b)}`)).join(''))
   )
 }
-
-const wrapItem = el => x => `<${el}>${x}</${el}>`
-const wrapTH = wrapItem('th')
-const wrapTR = wrapItem('tr')
-const wrapTD = wrapItem('td')
-const wrapTBL = wrapItem('table')
-const wrapHTML = wrapItem('html')
-const wrapBDY = wrapItem('body')
-const wrapP = wrapItem('p')
