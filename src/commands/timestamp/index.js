@@ -1,6 +1,5 @@
 import { appendFile } from 'fs';
 import R from 'ramda';
-import { dateStr } from '../../utils';
 
 const d = new Date();
 
@@ -8,7 +7,7 @@ const formatDate = R.compose(
   R.join('-'),
   R.tail,
   R.split(' '),
-  dateStr
+  date => date.toDateString()
 );
 
 function getTimestamp() {
